@@ -1,6 +1,6 @@
 ---
 name: local-webapp-p1-scoping
-description: Phase 1 of the local web app generation cycle — scoping in up to 8 questions (incl. local port, external API systems to call, persistent preferences, i18n, tests), accent choice, calibration announcement (number of batches), and writing of the scoping spec.
+description: Phase 1 of the local web app generation cycle — scoping in up to 7 questions plus the accent (incl. local port, external API systems to call, persistent preferences, i18n, tests), accent choice, calibration announcement (number of batches), and writing of the scoping spec.
 model: sonnet
 ---
 
@@ -19,7 +19,7 @@ Lock the project parameters (port, external API systems, preferences, i18n, test
 
 ## 1. Questions
 
-**Phase banner (show first)** — on a new app, first list the 5 phases once (overview in `## PIPELINE` of `CLAUDE.md`). Then output the phase banner as plain Markdown in the user's language, **never inside a code block or fenced block**. Three blocks, each on its own line: (1) H2 heading: Phase 1/5 — Scoping; (2) progress line: ▶ Scoping · Features · Surfaces · Architecture · Development; (3) intent in italics: Destination folder, project parameters, palette.
+**Phase banner (show first)** — on a new app, first list the 5 phases once (overview in `## PIPELINE` of `CLAUDE.md`). Then output the phase banner as plain Markdown in the user's language, **never inside a code block or fenced block**. Three blocks, each on its own line: (1) H2 heading: Phase 1/5 — Scoping; (2) progress line: ▶ Scoping · Features · Surfaces · Architecture · Development; (3) intent in italics: Destination folder, project parameters, accent.
 
 Start with the objective, then establish the project root (folder name → location → creation), then ask the closed parameters with the `AskUserQuestion` tool (clickable options, the recommended one first). Cap = **4 questions per call** → **two calls**.
 
@@ -37,7 +37,7 @@ Start with the objective, then establish the project root (folder name → locat
 
 > Free-form text, **not** `AskUserQuestion` (non-enumerable): "External API systems this app calls out to? (base URL(s) and, if known, auth method — e.g. API key in header, Bearer token, none). Leave empty if none."
 
-Record every declared system verbatim; each becomes a dedicated wrapper under `src/services/` (`rules/api-calls.md`) and a documented `.env` variable (`rules/env-config.md`).
+Record every declared system verbatim; each becomes a dedicated wrapper under `src/services/` (`@rules/api-calls.md`) and a documented `.env` variable (`@rules/env-config.md`).
 
 ### Closed parameters
 

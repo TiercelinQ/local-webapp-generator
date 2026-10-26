@@ -11,7 +11,7 @@ app.listen(config.PORT, "127.0.0.1", () => {
 });
 ```
 
-- Bind explicitly to `127.0.0.1` (or `localhost`) — **never** `0.0.0.0`. The app is never exposed beyond the local machine.
+- Bind explicitly to `127.0.0.1` — **never** `0.0.0.0`. The app is never exposed beyond the local machine.
 - No reverse proxy, no tunnel, no public deployment target documented or scripted by the generator.
 
 ## 2. Route input validation (in the route handlers)
@@ -41,7 +41,7 @@ app.listen(config.PORT, "127.0.0.1", () => {
 
 ## 6. Data
 
-- SQLite database (if used), `preferences.json`, and logs: written under the project's own `data/`/`logs/` folders — never committed (`.gitignore`: `*.db`, `preferences.json`, `logs/`).
+- `preferences.json` and logs: written under the project's own `data/`/`logs/` folders — never committed (`.gitignore`: `preferences.json`, `logs/`).
 - No application data committed.
 
 ## 7. Misc
@@ -51,7 +51,7 @@ app.listen(config.PORT, "127.0.0.1", () => {
 
 ## Anti-patterns — what NOT to do
 
-- **Do not** bind the server to `0.0.0.0` or any address beyond `127.0.0.1`/`localhost`.
+- **Do not** bind the server to `0.0.0.0` or any address beyond `127.0.0.1`.
 - **Do not** use a route input (params, query, body) without validating it first (type guard, bounds, path resolution).
 - **Do not** concatenate a value into a SQL string — always parameterized queries.
 - **Do not** concatenate a value into an outbound request URL or body string — build it from typed objects (`@rules/api-calls.md`).
@@ -61,4 +61,4 @@ app.listen(config.PORT, "127.0.0.1", () => {
 
 ## Integrity verification
 
-Detailed in `@rules/verification.md`. Key points: server bound to `127.0.0.1`/`localhost` only; every route input validated server-side before use; SQL 100% parameterized (if a database is used); outbound requests built from typed objects, never string concatenation; CORS absent or restricted to an explicit localhost allowlist; no secret in code, client-facing output, or logs; `.env` documented via `.env.example`, never committed; error responses sanitized (no stack trace leaked to the client).
+Detailed in `@rules/verification.md`. Key points: server bound to `127.0.0.1` only; every route input validated server-side before use; SQL 100% parameterized (if a database is used); outbound requests built from typed objects, never string concatenation; CORS absent or restricted to an explicit localhost allowlist; no secret in code, client-facing output, or logs; `.env` documented via `.env.example`, never committed; error responses sanitized (no stack trace leaked to the client).

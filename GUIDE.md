@@ -1,6 +1,6 @@
 # Guide d'utilisation — Local Web App Generator
 
-> Version 0.1.0 : pipeline de génération + skills de maintenance, rôle explicite par skill, specs persistées, vérification exécutable, mémoire native.
+> Version 0.1.1 : pipeline de génération + skills de maintenance, rôle explicite par skill, specs persistées, vérification exécutable, mémoire native.
 
 ---
 
@@ -21,16 +21,17 @@ local-webapp-generator/
     │   ├── css.md             # Organisation Sass/Bootstrap, $primary, data-bs-theme, nommage
     │   ├── errors.md          # Contrat ApiResult<T>, toasts, middleware d'erreur Express + uncaughtException
     │   ├── security.md        # Sécurité web (validation entrées, secrets .env, CORS localhost)
-    │   ├── config.md          # config.ts, versioning, tsconfig, packaging (aucun)
+    │   ├── config.md          # config.ts, scripts npm, dépendances, tsconfig, i18n, .gitignore (packaging : aucun)
     │   ├── env-config.md      # Variables d'environnement (.env / .env.example)
     │   ├── api-calls.md       # Conventions d'appels HTTP sortants (client, timeouts, retries)
     │   ├── tests.md           # Vitest, couverture par couche
     │   ├── logging.md         # pino obligatoire (fichier, niveaux, zéro console.log)
+    │   ├── versioning.md      # Changelog SemVer, version canonique package.json + miroir config.ts
     │   ├── verification.md    # Vérification EXÉCUTABLE centralisée + intégrité statique
     │   └── readme.md          # Synchro README post-livraison (régénération auto)
     ├── skills/
     │   ├── local-webapp-app/            # Menu démarrage / reprise / maintenance (4 options)
-    │   ├── local-webapp-p1-scoping/     # Scoping — jusqu'à 8 questions + accent → docs/specs/01-scoping.md
+    │   ├── local-webapp-p1-scoping/     # Scoping — jusqu'à 7 questions + accent → docs/specs/01-scoping.md
     │   ├── local-webapp-p2-featuring/   # Fiche besoins → docs/specs/02-featuring.md
     │   ├── local-webapp-p3-surfaces/    # Proposition layout → docs/specs/03-surfaces.md
     │   ├── local-webapp-p4-architect/   # Contrat architectural verrouillé → docs/specs/04-architect.md
@@ -99,7 +100,7 @@ node --version         # Node.js 22 LTS+ (pour exécuter les apps générées)
 
 ### Phase 1 — Scoping
 
-Jusqu'à 8 questions en un seul bloc : objectif · port local · systèmes API externes à appeler · préférences persistantes · i18n FR/EN · tests (Vitest) · variables d'environnement attendues. Puis choix de l'**accent** : un seul override optionnel (`$primary`) du thème Bootstrap 5.3 standard. Accent « Steel Blue » par défaut + 5 accents nommés (Teal, Forest, Slate, Amber, Ruby) + hex personnalisé + option « thème Bootstrap par défaut » (aucun override) ; contrôle de contraste WCAG AA (averti, non bloquant) sur l'accent.
+Jusqu'à 7 questions, en quelques échanges (texte libre puis choix cliquables) : objectif · port local · systèmes API externes à appeler · préférences persistantes · i18n FR/EN · tests (Vitest) · variables d'environnement attendues. Puis choix de l'**accent** : un seul override optionnel (`$primary`) du thème Bootstrap 5.3 standard. Accent « Steel Blue » par défaut + 5 accents nommés (Teal, Forest, Slate, Amber, Ruby) + hex personnalisé + option « thème Bootstrap par défaut » (aucun override) ; contrôle de contraste WCAG AA (averti, non bloquant) sur l'accent.
 
 Calibrage **provisoire** annoncé (figé après Phase 2) :
 
@@ -116,7 +117,7 @@ Fiche structurée + calibrage **confirmé** à partir du compte réel. Validatio
 
 ### Phase 3 — Surfaces
 
-Co-conception guidée. Questionnaire structurant (navigation, organisation du contenu, formulaires et actions) appuyé sur le catalogue de patterns de `layout.md` §12 : topbar + onglets (défaut), sidebar verticale, barre de menus, master-detail. Puis proposition sur mesure, composition librement amendable, et questions de détail (position des onglets, drawer/modale, 6 positions de toasts). Validation bloquante. Écrit `docs/specs/03-surfaces.md`.
+Co-conception guidée. Questionnaire structurant (navigation, organisation du contenu, formulaires et actions) appuyé sur le catalogue de patterns de `layout.md` §12 : topbar + onglets (défaut), sidebar verticale, master-detail. Puis proposition sur mesure, composition librement amendable, et questions de détail (position des onglets, drawer/modale, 6 positions de toasts). Validation bloquante. Écrit `docs/specs/03-surfaces.md`.
 
 ### Phase 4 — Architect
 
@@ -172,7 +173,7 @@ npm install
 npm run typecheck            # tsc --noEmit
 npm run lint                 # eslint
 npm run build                # tsc
-npm run test                 # vitest — si activé (Phase 1)
+npm test                     # vitest — si activé (Phase 1)
 ```
 
 `/local-webapp-run-tests` exécute cette échelle ; `/local-webapp-fix-issue` y renvoie pour confirmer une correction.
@@ -198,7 +199,7 @@ Prérequis : la mémoire auto doit être activée (`/config → Memory → Enabl
 | Commande                          | Modèle | Action                                               |
 | ------------------------------------ | ------ | ----------------------------------------------------- |
 | `/local-webapp-app`                 | Haiku  | Menu démarrage / reprise / maintenance               |
-| `/local-webapp-p1-scoping`          | Sonnet | Scoping — jusqu'à 8 questions + accent               |
+| `/local-webapp-p1-scoping`          | Sonnet | Scoping — jusqu'à 7 questions + accent               |
 | `/local-webapp-p2-featuring`        | Sonnet | Fiche besoins                                         |
 | `/local-webapp-p3-surfaces`         | Sonnet | Proposition layout + personnalisation                |
 | `/local-webapp-p4-architect`        | Sonnet | Contrat architectural verrouillé (endpoints)         |
@@ -223,15 +224,16 @@ Prérequis : la mémoire auto doit être activée (`/config → Memory → Enabl
 
 ```
 mon-app/
-├── package.json · tsconfig*.json · eslint.config.mjs
+├── package.json · tsconfig.json · eslint.config.mjs
 ├── README.md
 ├── CLAUDE.md                      # Identité projet (origine, contexte, écarts) — généré en fin de Phase 5
 ├── .claude/settings.json          # Garde-fous + hook de vérification (app auto-contrôlée)
 ├── docs/specs/                    # Specs de génération (langue utilisateur)
 ├── docs/release/CHANGELOG.md      # Changelog SemVer (Keep a Changelog)
+├── docs/sessions/SESSION_<App>_S0.md  # Session de référence (auto, fin de Phase 5)
 ├── .env.example                   # Variables d'environnement documentées
 └── src/
-    ├── shared/                    # config.ts, types.ts, logger.ts
+    ├── shared/                    # config.ts, types.ts, errors.ts, logger.ts, http-client.ts, error-middleware.ts
     ├── routes/                    # Routers Express (controllers)
     ├── services/                  # Appels vers les systèmes API externes
     ├── views/                     # Templates / pages statiques

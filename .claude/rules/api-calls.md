@@ -111,7 +111,7 @@ export async function getCurrentTemperature(city: string): Promise<number> {
 ```
 
 ```ts
-// src/routes/weather.routes.ts
+// src/routes/weather.routes.ts (JSON router, mounted under /api: GET /api/weather)
 router.get("/weather", async (req, res): Promise<void> => {
   const city = validateCityParam(req.query.city); // @rules/security.md
   try {

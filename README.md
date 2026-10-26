@@ -12,7 +12,7 @@ Full generation pipeline **plus** post-delivery maintenance skills, an explicit 
 
 A structured prompt system that generates complete, production-ready local web applications (Node.js/Express, UI + API, calling out to external systems) through a 5-phase cycle, then maintains them:
 
-1. **Scoping** - up to 8 questions (objective, local port, preferences, i18n, tests, external API targets) + accent choice (named preset, custom hex, or the Bootstrap default; WCAG AA check)
+1. **Scoping** - up to 7 questions (objective, external API systems, local port, preferences, i18n, tests, environment variables) + accent choice (named preset, custom hex, or the Bootstrap default; WCAG AA check)
 2. **Featuring** - structured feature sheet, explicit out-of-scope, locked sizing
 3. **Surfaces** - navigation, content organization, forms, toast position (6 positions)
 4. **Architect** - full file tree, API endpoint table, Bootstrap variables/classes → usage table - locked before any code is written
@@ -39,7 +39,7 @@ Every generated app enforces the same visual design system, strict route/service
 | Styling         | Bootstrap 5.3 (npm, compiled locally via Sass) - `_custom.scss` + `app.scss` |
 | Icons           | Bootstrap Icons (local npm)                                    |
 | i18n            | i18next FR/EN (opt-in)                                       |
-| Outbound APIs   | Native `fetch` / `httpx`-equivalent client, timeouts + retries |
+| Outbound APIs   | Native `fetch` wrapped in `src/shared/http-client.ts`, timeouts + retries |
 | Logging         | pino (file transport, mandatory)                             |
 | Tests           | Vitest (opt-in)                                               |
 | Distribution    | None - internal, local-only usage                            |
@@ -78,7 +78,7 @@ Then in Claude Code:
 | Command                          | Action                                             |
 | --------------------------------- | --------------------------------------------------- |
 | `/local-webapp-app`              | Start menu (4 entry points incl. maintenance)      |
-| `/local-webapp-p1-scoping`       | Scoping - up to 8 questions + accent choice        |
+| `/local-webapp-p1-scoping`       | Scoping - up to 7 questions + accent choice        |
 | `/local-webapp-p2-featuring`     | Featuring - requirements sheet + locked sizing     |
 | `/local-webapp-p3-surfaces`      | Surfaces - layout proposal + customization         |
 | `/local-webapp-p4-architect`     | Architect - locked architecture contract (endpoints) |
@@ -103,7 +103,7 @@ Then in Claude Code:
 
 ```
 my-app/
-├── package.json · tsconfig*.json · eslint.config.mjs
+├── package.json · tsconfig.json · eslint.config.mjs
 ├── README.md
 ├── CLAUDE.md                      # Project identity (origin, business context, deviations)
 ├── .claude/settings.json          # Guardrails + verification hook (self-enforced app)
@@ -112,7 +112,7 @@ my-app/
 ├── docs/sessions/SESSION_<App>_S0.md  # Delivery baseline session (auto, end of Phase 5)
 ├── .env.example                   # Documented environment variables
 └── src/
-    ├── shared/                    # config.ts · types.ts · api-clients.ts
+    ├── shared/                    # config.ts · types.ts · errors.ts · logger.ts · http-client.ts · error-middleware.ts
     ├── routes/                    # Express routers (controllers)
     ├── services/                  # Outbound calls to external API systems
     ├── views/                     # Templates / static pages

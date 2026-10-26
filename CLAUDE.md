@@ -2,7 +2,7 @@
 
 > Senior Node.js/Express/TypeScript expert. Local web applications (UI + API), calling out to other systems' endpoints, personal and professional use.
 > Do not explain general programming concepts. Explain only the Node.js/Express specifics that deviate from what a generic senior developer would expect.
-> Framework version: 0.1.0 (baseline). This version is recorded in each generated app's `CLAUDE.md`.
+> Framework version: 0.1.1 (baseline). This version is recorded in each generated app's `CLAUDE.md`.
 
 ---
 
@@ -10,7 +10,7 @@
 
 - **Respond in the user's language.** Detect it from the user's messages and honor any explicit request to switch. Every conversational reply, grouped question block, confirmation, batch announcement (`Batch N/...`), displayed template, and spec/doc file you write follows the user's language. The driving files (this file, skills, rules) stay in English - that is the authoring language, not the output language. The English prompts, question wording, and on-screen templates quoted inside the skills are authoring templates too: render them in the user's language when shown, never paste the English verbatim.
 - Dense, direct answers. Lists over prose. Short confirmations.
-- **Closed/enumerable choices are asked with the `AskUserQuestion` tool** (clickable options, the recommended option first / marked `(recommended)`) — never make the user type an answer that can be enumerated (port, Yes/No, orientation, palette, external API auth mode…). Free-form text is reserved for non-enumerable input only (free description, file paths, custom hex, endpoint URLs). Tool caps: **≤ 4 questions per call** and **2-4 options per question** — split into several `AskUserQuestion` calls when needed, and use the built-in **Other** option for a 5th+ choice or a custom value. **Never call `AskUserQuestion` for a free-form / non-enumerable prompt** (objective, folder name/location, file path, custom hex, base URL): the tool requires ≥ 2 options and errors otherwise — ask those as plain text.
+- **Closed/enumerable choices are asked with the `AskUserQuestion` tool** (clickable options, the recommended option first / marked `(recommended)`) — never make the user type an answer that can be enumerated (port, Yes/No, orientation, accent, external API auth mode…). Free-form text is reserved for non-enumerable input only (free description, file paths, custom hex, endpoint URLs). Tool caps: **≤ 4 questions per call** and **2-4 options per question** — split into several `AskUserQuestion` calls when needed, and use the built-in **Other** option for a 5th+ choice or a custom value. **Never call `AskUserQuestion` for a free-form / non-enumerable prompt** (objective, folder name/location, file path, custom hex, base URL): the tool requires ≥ 2 options and errors otherwise — ask those as plain text.
 - Whenever you ask a question, propose options, or propose a solution and await the user's reply, always include a recommended answer marked as recommended (in the user's language, e.g. `(recommended)`), chosen as the most pertinent for the context.
 - No unsolicited recap. No emojis. No filler.
 - Append at the end of every reply (except after `/local-webapp-save-session`, `/local-webapp-show-state`, `/local-webapp-show-contract`, `/local-webapp-save-memory`):
@@ -41,7 +41,7 @@ The generation pipeline has 5 phases. Each phase skill **opens by displaying a v
 
 Phases - user-facing name + one-line intent:
 
-1. **Scoping** - destination folder, project parameters, palette.
+1. **Scoping** - destination folder, project parameters, accent.
 2. **Features** - elicit, prioritize (MoSCoW), bound the v1.0 scope.
 3. **Surfaces** - map the validated features onto the layout.
 4. **Architecture** - lock the file/structure contract.
@@ -139,7 +139,7 @@ All commands below are Claude Code skills invocable with `/`:
 | Command                       | Skill                                | Action                                                    |
 | ------------------------------ | -------------------------------------- | ----------------------------------------------------------- |
 | `/local-webapp-app`            | `skills/local-webapp-app/`            | Start / resume / maintenance menu                         |
-| `/local-webapp-p1-scoping`     | `skills/local-webapp-p1-scoping/`     | Scoping - up to 8 questions + color palette                |
+| `/local-webapp-p1-scoping`     | `skills/local-webapp-p1-scoping/`     | Scoping - up to 7 questions + accent                       |
 | `/local-webapp-p2-featuring`   | `skills/local-webapp-p2-featuring/`   | App name + features (MoSCoW) + v1.0 scope + locked sizing |
 | `/local-webapp-p3-surfaces`    | `skills/local-webapp-p3-surfaces/`    | Layout co-design                                            |
 | `/local-webapp-p4-architect`   | `skills/local-webapp-p4-architect/`   | Locked architectural contract                              |
@@ -153,7 +153,7 @@ All commands below are Claude Code skills invocable with `/`:
 | `/local-webapp-add-feature`   | `skills/local-webapp-add-feature/`    | Add a feature to a delivered app (contract-compliant) |
 | `/local-webapp-fix-issue`     | `skills/local-webapp-fix-issue/`      | Fix a bug - decision tree, root cause                 |
 | `/local-webapp-refactor-code` | `skills/local-webapp-refactor-code/`  | Refactor under explicit validation only               |
-| `/local-webapp-migrate-design` | `skills/local-webapp-migrate-design/` | Convert a v1.x app to design system v2.0 (validated plan) |
+| `/local-webapp-migrate-design` | `skills/local-webapp-migrate-design/` | Convert a legacy custom-CSS app to Bootstrap 5.3, design system v3.0 (validated plan) |
 | `/local-webapp-release`       | `skills/local-webapp-release/`        | Cut a SemVer release from the accumulated changelog   |
 | `/local-webapp-run-tests`     | `skills/local-webapp-run-tests/`      | Run executable verification (typecheck, lint, build)  |
 
@@ -180,7 +180,7 @@ Which command(s) to run for a given intent. The **generation pipeline** (p1→p5
   - Add a feature — `/local-webapp-add-feature` → `/local-webapp-run-tests`
   - Fix a bug — `/local-webapp-fix-issue` → `/local-webapp-run-tests`
   - Refactor (behavior-preserving, plan validated first) — `/local-webapp-refactor-code` → `/local-webapp-run-tests`
-  - Convert a legacy app to design system v2.0 (proposed by load-project on detection) — `/local-webapp-migrate-design` → `/local-webapp-run-tests`
+  - Convert a legacy custom-CSS app to Bootstrap 5.3, design system v3.0 (proposed by load-project on detection) — `/local-webapp-migrate-design` → `/local-webapp-run-tests`
   - Understand / audit the code — `/local-webapp-trace-feature`
   - Refresh the README — `/local-webapp-generate-readme`
   - Cut a release — `/local-webapp-release` (turns the accumulated `docs/release/CHANGELOG.md` `[Unreleased]` entries into a dated SemVer version)
@@ -198,4 +198,4 @@ Canonical source of the calibration. Skills refer to it - do not duplicate this 
 | Small          | < 10  | ≤ 5      | 3                    | 4                       |
 | Medium / Large | ≥ 10  | > 5      | 4                    | 5                       |
 
-The extra batch corresponds to the test suite + dev dependencies (see `rules/tests.md`). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. Stack options (i18n, tests) push the size up (no dedicated batch).
+The extra batch corresponds to the test suite + dev dependencies (see `rules/tests.md`). Divergent criteria (e.g. < 10 files but > 5 features): the highest criterion wins → Medium/Large. i18n and each external API system add files and push the size up (no dedicated batch).

@@ -19,7 +19,7 @@
 
 ### Routes (Controllers) — `src/routes/`
 - One Express router per entity: `[entity].routes.ts`.
-- Register the route handlers (`router.get`, `router.post`, …), mounted in `src/index.ts`.
+- Register the route handlers (`router.get`, `router.post`, …), mounted by `registerAllRoutes(app)` (`routes/index.ts`, called from `src/app.ts` / `src/index.ts`). JSON routers are mounted under `/api` (a route written `router.post("/records", …)` answers on `POST /api/records`); page routes are mounted at `/`.
 - Validate every route input (params, query, body) before calling the Service — see `@rules/security.md`.
 - Intercept business errors and return a structured result (see `@rules/errors.md`). **Never let a raw exception reach the client as an unhandled 500.**
 - **Forbidden**: business logic, direct data access, HTML construction beyond passing data to a view template.
@@ -51,18 +51,24 @@ my-app/
 ├── .gitignore                      # repo hygiene (delivered last batch) — @rules/config.md
 ├── .env.example                    # documented env vars — @rules/env-config.md
 ├── README.md
+├── vitest.config.ts                # only if tests enabled - @rules/tests.md
 ├── docs/
-│   └── specs/                      # generation specs (user's language): 01-scoping … 04-architect
+│   ├── specs/                      # generation specs (user's language): 01-scoping … 04-architect
+│   ├── release/CHANGELOG.md        # app changelog (English) - @rules/versioning.md
+│   └── sessions/                   # SESSION_<App>_S0.md written at the end of Phase 5
 ├── public/
 │   ├── favicon.ico
 │   ├── css/app.css                 # compiled from src/views/styles/app.scss — @rules/css.md
 │   └── js/                         # client-side scripts (theme toggle, toast/modal wiring, forms)
+├── test/                           # only if tests enabled, mirrors src/ - @rules/tests.md
 └── src/
     ├── shared/
     │   ├── config.ts                # application constants + env accessors
     │   ├── types.ts                 # DTOs + ApiResult<T>
     │   ├── errors.ts                 # named business errors
     │   ├── logger.ts                 # pino setup — @rules/logging.md
+    │   ├── http-client.ts            # outbound fetch wrapper (timeout, retry) - @rules/api-calls.md
+    │   ├── i18n/                     # fr.json, en.json - only if i18n enabled - @rules/config.md
     │   └── error-middleware.ts       # Express error-handling middleware — @rules/errors.md
     ├── services/
     │   ├── preferences.ts            # if persisted preferences (server-side) — layout.md §10
@@ -77,6 +83,7 @@ my-app/
     │   └── styles/
     │       ├── _custom.scss          # $primary override + Bootstrap variable overrides — @rules/css.md
     │       └── app.scss              # Bootstrap import + residual custom rules — @rules/css.md
+    ├── app.ts                        # createApp(): builds the Express app without .listen() - only if tests enabled - @rules/tests.md
     └── index.ts                      # entry point: loads env, mounts routes, starts the server
 ```
 
@@ -88,18 +95,18 @@ Bootstrap Icons do not appear in this tree — served directly from `node_module
 
 | Batch | Content                                                                                   |
 | ----- | ------------------------------------------------------------------------------------------ |
-| 1     | `src/shared/` + `src/services/`                                                            |
+| 1     | `src/shared/` (incl. `i18n/` if enabled) + `src/services/`                                 |
 | 2     | `src/routes/` + `src/views/` (templates + partials)                                        |
-| 3     | `src/index.ts` + `public/` + `src/views/styles/` + `i18n/` (if enabled) + root configs (incl. `.gitignore`, `.env.example`) + `package.json` + README + instructions |
+| 3     | `src/app.ts` (if tests) + `src/index.ts` + `public/` + `src/views/styles/` + root configs (incl. `.gitignore`, `.env.example`) + `package.json` + README + instructions |
 
 **Medium / Large project (4 batches):**
 
 | Batch | Content                                                                                   |
 | ----- | ------------------------------------------------------------------------------------------ |
-| 1     | `src/shared/` + `src/services/`                                                            |
+| 1     | `src/shared/` (incl. `i18n/` if enabled) + `src/services/`                                 |
 | 2     | `src/views/` (templates + partials)                                                        |
 | 3     | `src/routes/`                                                                               |
-| 4     | `src/index.ts` + `public/` + `src/views/styles/` + `i18n/` (if enabled) + root configs (incl. `.gitignore`, `.env.example`) + `package.json` + README + instructions |
+| 4     | `src/app.ts` (if tests) + `src/index.ts` + `public/` + `src/views/styles/` + root configs (incl. `.gitignore`, `.env.example`) + `package.json` + README + instructions |
 
 ### Tests batch (only if Phase 1 tests = Yes)
 Add a final dedicated batch — `test/` (mirroring `src/`) + `vitest.config.ts` + dev dependencies (`vitest`, `supertest`) + the `"test"` script. → Small 4 batches / Medium-Large 5 batches. Patterns and coverage: `@rules/tests.md`.
@@ -108,7 +115,7 @@ Add a final dedicated batch — `test/` (mirroring `src/`) + `vitest.config.ts` 
 - Announcement: `Batch N/[total] — [content]`
 - Files written directly to disk, complete and self-contained blocks.
 - Automatic chaining between batches without confirmation.
-- Last batch: install instructions (`npm install`, `npm run dev`, `npm run typecheck`, `npm run build`, `npm start`) + `README.md` at the root.
+- Last batch: install instructions (`npm install`, `npm run dev`, `npm run typecheck`, `npm run build`, `npm start`, `npm audit` as an advisory dependency check) + `README.md` at the root.
 
 ## Anti-patterns — what NOT to do (MVC / routing)
 

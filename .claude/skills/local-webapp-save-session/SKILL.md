@@ -41,7 +41,7 @@ Next batch: [X+1/total] (if Phase 5)
 
 - Stack: Node.js 22 LTS+ · Express · TypeScript strict
 - Persistent config: [Yes/No] · i18n: [Yes/No] · Tests: [Yes/No]
-- Palette: [name or custom; 5 light roles + derived]
+- Accent: [preset name, custom hex, or Bootstrap default]
 - Calibration: [Small 3 batches / Medium-Large 4 batches] (+1 test batch if tests enabled)
 - Selected features: [list]
 - Out of scope: [list]

@@ -64,7 +64,7 @@ describe("POST /api/records", () => {
   });
 
   it("retourne le record créé sur payload valide", async () => {
-    vi.spyOn(recordService, "save").mockResolvedValue({ id: 1, email: "a@b.com" });
+    vi.spyOn(recordService, "saveRecord").mockResolvedValue({ id: 1, email: "a@b.com" });
     const app = createApp();
     const res = await request(app).post("/api/records").send({ email: "a@b.com" });
     expect(res.status).toBe(200);

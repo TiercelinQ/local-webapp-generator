@@ -21,12 +21,12 @@ The converted files on disk (Sass setup, view markup switched to Bootstrap class
 
 The project is loaded (`/local-webapp-load-project`) and detected as **legacy** (custom CSS design system, pre-Bootstrap). Markers: presence of `src/views/styles/tokens.css` and/or `src/views/styles/styles.css` (superseded by `_custom.scss`/`app.scss`), CSS custom properties (`--bg`, `--primary-600`, `--radius`, etc.) instead of Bootstrap Sass variables/`--bs-*`, a `[data-theme="dark"]` block instead of `data-bs-theme`, a Lucide sprite (`public/icons/sprite.svg`) instead of Bootstrap Icons, a `.tabs::after` signature underline / `placeUnderline()` script, `box-shadow: none`/`border-radius: 5px` custom rules, or an absence of `bootstrap`/`bootstrap-icons`/`sass` in `package.json` dependencies. If the app already uses Bootstrap 5.3 in full, say so and stop.
 
-**Load context**: `design-system.md` (current, v3.0) + `layout.md` (current, v2.0) + `@rules/css.md` + `@rules/config.md` + `@rules/mvc.md` (cleanup protocol) + `@rules/verification.md`, and the app's `docs/specs/01-scoping.md` (original accent/palette) + `docs/specs/04-architect.md` (locked contract).
+**Load context**: `design-system.md` (current, v3.0) + `layout.md` (current, v2.0) + `@rules/css.md` + `@rules/config.md` + `@rules/mvc.md` (cleanup protocol) + `@rules/verification.md`, and the app's `docs/specs/01-scoping.md` (original accent) + `docs/specs/04-architect.md` (locked contract).
 
 ## Step 1 — Inventory (read-only)
 
 - `tokens.css`/`styles.css` (if present): current accent (`--primary-600`), custom component rules (tabs underline, modal/drawer/toast custom markup, table row styling), any `box-shadow`/literal `border-radius`.
-- `docs/specs/01-scoping.md`: original accent/palette choice — becomes the `$primary` value.
+- `docs/specs/01-scoping.md`: original accent choice — becomes the `$primary` value.
 - Views (`Grep` for Lucide sprite references, custom `.modal-overlay`/`.tabs`/`.drawer` markup, inline `style=`): every element that must be re-expressed with a Bootstrap component/class.
 - `package.json`: confirm absence of `bootstrap`/`bootstrap-icons`/`sass`.
 - The retained composition (`docs/specs/03-surfaces.md`): maps to P1/P2/P3 in the current `layout.md`.

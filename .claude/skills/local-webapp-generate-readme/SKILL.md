@@ -63,7 +63,7 @@ npm start             # run the built app on localhost
 npm test
 
 ## Accent
-[Named accent or custom $primary hex inferred from src/views/styles/_custom.scss — otherwise the Bootstrap default theme]
+[Named accent or custom $primary hex inferred from src/views/styles/_custom.scss, otherwise the Bootstrap default theme (design-system v3.0)]
 ```
 
 3. Write the file via `Write` (never `cat`/heredoc — Windows-incompatible).

@@ -34,11 +34,11 @@ export class ExternalApiError extends Error {
 ```
 
 ```ts
-// src/routes/record.routes.ts
+// src/routes/record.routes.ts (JSON router, mounted under /api: POST /api/records)
 router.post("/records", async (req, res): Promise<void> => {
   const data = validateRecordPayload(req.body); // @rules/security.md
   try {
-    const record = await recordService.save(data);
+    const record = await recordService.saveRecord(data);
     res.json({ ok: true, data: record } satisfies ApiResult<Record>);
   } catch (err) {
     if (err instanceof RecordNotFoundError) {

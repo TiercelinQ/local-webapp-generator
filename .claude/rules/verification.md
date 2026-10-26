@@ -14,7 +14,7 @@ npm install                  # dependencies resolve
 npm run typecheck            # tsc --noEmit — MUST be clean
 npm run lint                 # eslint — clean
 npm run build                # tsc — succeeds
-npm run test                 # vitest — only if tests were enabled in Phase 1 / test/ exists
+npm test                     # vitest — only if tests were enabled in Phase 1 / test/ exists
 ```
 
 Rules:
@@ -22,7 +22,7 @@ Rules:
 - No packaging or distribution step exists in this framework — verification stops at `build` (and `test` when applicable). Never add a packaging/dist command.
 - If Node/npm is **not** available in the environment, say so explicitly, fall back to the static checks below (read-through), and tell the user which commands they must run themselves before considering the work verified. Never claim a clean typecheck you could not run.
 - Quote the relevant command output as proof when reporting completion.
-- **`npm run test`** (vitest): run only if tests were enabled in Phase 1 / `test/` exists — exit code 0. Otherwise skip — **do not scaffold a suite**.
+- **`npm test`** (vitest): run only if tests were enabled in Phase 1 / `test/` exists — exit code 0. Otherwise skip — **do not scaffold a suite**.
 - The generated app ships a `.claude/settings.json` (deny guards on secrets/artifacts + a `Stop` hook running `npm run lint`). These enforce the rules automatically in later maintenance sessions but **do not replace** this checklist.
 
 ---
@@ -37,7 +37,7 @@ Rules:
 4b. Error-handling middleware registered last in `src/index.ts`; `uncaughtException`/`unhandledRejection` handlers present (see `@rules/errors.md`).
 5. Node 22 LTS+ · zero deprecated API.
 6. `design-system.md` compliance + the composition validated in `docs/specs/03-surfaces.md`/`04-architect.md` + the retained `layout.md` specs (toasts, modals) — Bootstrap components used natively wherever available (no custom reinvention of `.btn`/`.card`/`.modal`/`.toast`/`.navbar`/`.offcanvas`), zero hardcoded visual value that duplicates an available Bootstrap variable/utility, zero inline `style=""`. See `@rules/css.md` anti-patterns.
-7. `@rules/security.md` respected (server bound to `127.0.0.1`/`localhost`, validated route inputs, parameterized SQL and outbound requests, CORS absent or localhost-restricted, no secret in client-facing output or logs).
+7. `@rules/security.md` respected (server bound to `127.0.0.1`, validated route inputs, parameterized SQL and outbound requests, CORS absent or localhost-restricted, no secret in client-facing output or logs).
 8. Errors: business errors raised in the service, caught in the route, returned as `ApiResult<T>`, surfaced as toasts; no `alert()`/`confirm()`. See `@rules/errors.md`.
 9. Outbound API calls: every call goes through `src/services/`, uses `fetch` with a timeout and the documented retry policy, never a direct call from a route or a view. See `@rules/api-calls.md`.
 
@@ -52,11 +52,10 @@ Rules:
 17. `.gitignore` present at the project root and correct (`@rules/config.md § .gitignore`): ignores `node_modules/`, the anchored build output (`/dist/`), `.env`, `tasks/`, `.claude/settings.local.json` + `.claude/agent-memory/`, and `docs/specs/`; **never** ignores `docs/release/CHANGELOG.md`, `.claude/settings.json`, the generated `CLAUDE.md`, `test/`, or `.env.example`. Verify with `git add -A` + `git status`, not only `git check-ignore` (the negation rules mislead it).
 
 ### Per-domain (conditional — see the matching rule for detail)
-- **logging** (`@rules/logging.md`): `src/shared/logger.ts` present and conforming; imported first in `src/index.ts`; `pino` in `dependencies`; no `console.log` in delivered `src/`; every non-re-throwing `catch` calls `logger.error(...)`.
+- **logging** (`@rules/logging.md`): `src/shared/logger.ts` present and conforming; imported right after `import "dotenv/config"` in `src/index.ts`; `pino` in `dependencies`; no `console.log` in delivered `src/`; every non-re-throwing `catch` calls `logger.error(...)`.
 - **env-config** (`@rules/env-config.md`): `.env.example` present and documents every expected key with no real value; startup validation fails fast on a missing required variable; no scattered `process.env.X` outside `src/shared/config.ts`.
 - **api-calls** (`@rules/api-calls.md`): every outbound call in `src/services/` uses the shared HTTP client with a timeout and the documented retry policy (5xx/network only, never 4xx); no secret hardcoded; outbound calls logged (method/URL/status/duration) without sensitive query params or bodies.
-- **DB** (`@rules/db.md`, if applicable): `db.ts` single access point; `migrations.ts` called in `src/index.ts` before the server starts listening; `config.DB_SCHEMA_VERSION` == `max(MIGRATIONS)`; no DB access outside `services/`; SQL parameterized.
-- **tests** (`@rules/tests.md`): if enabled, each source module has a matching test (Phase 4 mapping); `npm run test` exit 0; dev dependencies present.
+- **tests** (`@rules/tests.md`): if enabled, each source module has a matching test (Phase 4 mapping); `npm test` exit 0; dev dependencies present.
 - **versioning** (`@rules/versioning.md`): `docs/release/CHANGELOG.md` present and English; top released version == `package.json` `"version"` == `config.ts APP_VERSION`; maintenance changes recorded under `[Unreleased]` in the right category; after `/local-webapp-release`, `[Unreleased]` reset empty and the cut block carries the right version + date.
 
 ---

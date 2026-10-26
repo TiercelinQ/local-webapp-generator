@@ -11,7 +11,7 @@
 
 ## Centralized configuration
 
-Mandatory file `src/shared/logger.ts` (single setup point, imported first in `src/index.ts`):
+Mandatory file `src/shared/logger.ts` (single setup point, imported in `src/index.ts` right after `import "dotenv/config"`):
 
 ```ts
 // src/shared/logger.ts
@@ -72,7 +72,8 @@ In `catch` blocks that do not re-throw (an `ApiResult` error is returned, a toas
 ## Activation from `src/index.ts`
 
 ```ts
-import { logger } from "./shared/logger"; // first import — before routes and server start
+import "dotenv/config";                // first statement (@rules/env-config.md)
+import { logger } from "./shared/logger"; // then the logger, before routes and server start
 logger.info("Starting application");
 ```
 
@@ -82,10 +83,10 @@ logger.info("Starting application");
 
 - **Do not** use `console.log` / `console.error` in delivered code — only `logger.*`.
 - **Do not** log a password, token, or personally identifiable data — see `@rules/security.md` and `@rules/api-calls.md` (outbound call logs exclude sensitive query params and bodies).
-- **Do not** configure transports outside `src/shared/logger.ts` (single setup point, imported first in `src/index.ts`).
+- **Do not** configure transports outside `src/shared/logger.ts` (single setup point, imported right after `import "dotenv/config"` in `src/index.ts`).
 - **Do not** silence a `catch` that doesn't re-throw without a `logger.error(...)`.
 - **Do not** pipe `pino-pretty` into the production file transport — it is a dev-only console convenience.
 
 ## Integrity verification
 
-Detailed in `@rules/verification.md`. Key points: `src/shared/logger.ts` present and conforming; imported first in `src/index.ts`; `pino` in `dependencies`; no `console.log` in delivered `src/`; every non-re-throwing `catch` calls `logger.error(...)`.
+Detailed in `@rules/verification.md`. Key points: `src/shared/logger.ts` present and conforming; imported right after `import "dotenv/config"` in `src/index.ts`; `pino` in `dependencies`; no `console.log` in delivered `src/`; every non-re-throwing `catch` calls `logger.error(...)`.

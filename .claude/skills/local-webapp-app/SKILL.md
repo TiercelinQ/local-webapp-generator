@@ -44,6 +44,7 @@ Project root to maintain? (folder path, e.g. C:\projects\MyApp)
 - add a feature → `/local-webapp-add-feature`
 - fix a bug → `/local-webapp-fix-issue`
 - restructure existing code → `/local-webapp-refactor-code`
+- convert a legacy custom-CSS app to Bootstrap 5.3 → `/local-webapp-migrate-design`
 - cut a release / bump the version → `/local-webapp-release`
 - verify the build / run checks → `/local-webapp-run-tests`
 

@@ -75,7 +75,7 @@ Produce the sheet (in the user's language):
 - Tests: [Yes/No] — Vitest
 - Environment variables: [Phase 1 list]
 - Validated libraries: [Phase 1 list]
-- Palette: [Phase 1 choice: preset name or custom accent + optional overrides]
+- Accent: [Phase 1 choice: preset name, custom hex, or Bootstrap default]
 
 **Calibration (confirmed here, from the v1.0 feature count)**
 - Counted v1.0 features: [N]

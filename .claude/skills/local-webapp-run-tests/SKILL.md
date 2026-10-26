@@ -27,7 +27,7 @@ A short report in the user's language stating what passed, with command output a
    npm run typecheck            # tsc --noEmit — expect clean
    npm run lint                 # eslint — expect clean
    npm run build                # tsc build — expect success
-   npm run test                 # only when tests are enabled
+   npm test                     # only when tests are enabled
    ```
 2. **Capture output**. A non-zero exit or any reported error is a failure — quote the relevant lines.
 3. **Report** (in the user's language): which commands passed, with proof. On failure: name the command, the `file:line`, and hand off to `/local-webapp-fix-issue` for the root cause (do not patch here unless the user asks).
@@ -35,7 +35,7 @@ A short report in the user's language stating what passed, with command output a
 
 ## Test creation policy
 
-- Tests are opt-in at Phase 1. If enabled, the suite (Vitest) was delivered in its dedicated batch — run it (`npm run test`).
+- Tests are opt-in at Phase 1. If enabled, the suite (Vitest) was delivered in its dedicated batch — run it (`npm test`).
 - **Do not create a test suite if the project has none** (Phase 1 tests = No). The default verification is typecheck + lint + build.
 - If the user **explicitly asks** to add tests later: follow `@rules/tests.md` (Vitest, layer coverage, mocked service/external calls). Confirm scope, then add the dev dependencies + `vitest.config.ts` + the `"test"` script.
 

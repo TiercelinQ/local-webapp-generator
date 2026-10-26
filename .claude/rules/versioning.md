@@ -50,7 +50,7 @@ Operations **accumulate** entries under `[Unreleased]` — they do **not** bump 
 | `add-feature` | `Added` (+ `Changed` if it alters existing behavior) | MINOR |
 | `fix-issue` | `Fixed` | PATCH |
 | `refactor-code` | `Changed` (internal) | PATCH |
-| `migrate-design` | `Changed` (UI migrated to design system v2.0) | MINOR |
+| `migrate-design` | `Changed` (legacy custom-CSS UI migrated to Bootstrap 5.3, design system v3.0) | MINOR |
 | breaking change (any op) | `**BREAKING:**` marker (`Changed`/`Removed`) | MAJOR |
 
 ## Release inference (`/local-webapp-release`)
@@ -66,7 +66,7 @@ The inferred increment is **proposed** to the user (`AskUserQuestion`, inferred 
 ### What counts as breaking (MAJOR) for a local web app
 
 - A feature/page removed that a user relied on.
-- A DB schema migration that cannot read the previous data format (`@rules/db.md`).
+- A `preferences.json` format change that the new version cannot read from the previous file.
 - A `.env` key renamed or removed in a way that breaks an existing deployment without manual action.
 - Dropping support for a Node runtime baseline.
 - An API endpoint contract removed/renamed in a way that breaks a documented external integration.

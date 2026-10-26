@@ -8,7 +8,7 @@
 
 ## What the README documents
 
-objective · stack & dependencies · file tree · API endpoints (routes) · external systems called (from `src/services/`) · DB schema (if applicable) · prerequisites (Node version, expected `.env` keys) · conventions · installation. Exact sections: `/local-webapp-generate-readme`.
+objective · stack & dependencies · file tree · API endpoints (routes) · external systems called (from `src/services/`) · prerequisites (Node version, expected `.env` keys) · conventions · installation · the design system reference (`design-system v3.0`, in the Accent section) so that `/local-webapp-load-project` can tell a current app from a legacy one. Exact sections: `/local-webapp-generate-readme`.
 
 ## When to refresh (trigger)
 
@@ -16,7 +16,6 @@ Regenerate the README **iff** the change touched a documented aspect above:
 - a dependency added/removed, or a stack change,
 - the file tree changed (a file/view/service added, renamed, moved, or deleted),
 - a route or endpoint added or renamed,
-- the DB schema changed (table, column, version/migration),
 - a prerequisite changed (e.g. a new `.env` key required),
 - build or install steps changed.
 

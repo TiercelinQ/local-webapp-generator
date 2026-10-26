@@ -12,10 +12,6 @@ export const APP_VERSION = "1.0.0";
 // Server
 export const PORT = Number(process.env.PORT ?? 3000);
 
-// Database (if applicable) — relative path under data/
-export const DB_FILENAME = "app_name.db";
-export const DB_SCHEMA_VERSION = 1;      // if DB ≠ none — target schema version, == max(MIGRATIONS) — @rules/db.md
-
 // Preferences (if applicable)
 export const PREFERENCES_FILENAME = "preferences.json";
 
@@ -23,7 +19,7 @@ export const PREFERENCES_FILENAME = "preferences.json";
 export const DEFAULT_LOCALE = "fr";
 export const SUPPORTED_LOCALES = ["fr", "en"] as const;
 
-// Toast position — layout.md §5 (Phase 3 choice, persisted preference)
+// Toast position — layout.md §5 (Phase 3 choice, build-time config)
 export const TOAST_POSITION = "top-right";
 
 // Logging — @rules/logging.md
@@ -37,7 +33,7 @@ export const API_MAX_RETRIES = 2;
 
 - Any constant reused in more than one file goes into `shared/config.ts`.
 - Every environment-derived value is read **once**, here, via `process.env` — never `process.env.X` scattered across the codebase. Detail: `@rules/env-config.md`.
-- Zero color in `config.ts` — the accent lives in `src/views/styles/_custom.scss` (`$primary`), everything else in Bootstrap's own theme (difference vs the Python generator).
+- Zero color in `config.ts` — the accent lives in `src/views/styles/_custom.scss` (`$primary`), everything else in Bootstrap's own theme.
 
 ## `package.json` — mandatory scripts
 
@@ -106,7 +102,7 @@ Versioning notes:
 
 Summary — full detail in `@rules/logging.md`.
 
-- `pino ^10.0.0` (mandatory dependency) + `src/shared/logger.ts` (single setup point, imported first in `src/index.ts`).
+- `pino ^10.0.0` (mandatory dependency) + `src/shared/logger.ts` (single setup point, imported right after `import "dotenv/config"` in `src/index.ts`).
 - File transport: `logs/app.log`, capped at `LOG_MAX_BYTES`, level `LOG_LEVEL` (`debug` if env var `[APP_NAME]_DEBUG=1`).
 - Zero `console.log` in delivered code — only `logger.*`.
 
@@ -121,7 +117,6 @@ node_modules/
 .env
 
 # --- App runtime data (defensive; normally under data/, outside the repo history) -
-*.db
 preferences.json
 logs/
 
@@ -147,8 +142,8 @@ desktop.ini
 ```
 
 - **Build output is anchored** (`/dist/`) — the leading slash confines the pattern to the repo root.
-- **App runtime data is defensive** (`*.db`, `preferences.json`, `logs/`) — the app writes them under `data/`/`logs/` in the project folder (no OS user-data directory to hide behind, unlike a desktop app), so the pattern is the actual guard here, not a safety net. `@rules/security.md`.
-- **Never ignored** (delivered assets): `docs/release/CHANGELOG.md` (the negated pattern above), `.claude/settings.json`, the generated root `CLAUDE.md`, `test/`/`tests/`, and `.env.example` (documented, no secret).
+- **App runtime data is defensive** (`preferences.json`, `logs/`) — the app writes them under `data/`/`logs/` in the project folder (no OS user-data directory to hide behind, unlike a desktop app), so the pattern is the actual guard here, not a safety net. `@rules/security.md`.
+- **Never ignored** (delivered assets): `docs/release/CHANGELOG.md` (the negated pattern above), `.claude/settings.json`, the generated root `CLAUDE.md`, `test/`, and `.env.example` (documented, no secret).
 - Verify the template with `git add -A` + `git status`, **not** only `git check-ignore` — the negation rules make `check-ignore` misleading.
 
 ## Integrity verification
