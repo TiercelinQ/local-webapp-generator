@@ -83,7 +83,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 
   ## Origin
 
-  Framework: local-webapp v0.1.1
+  Framework: local-webapp v2.0.0
 
   ## Business context
 
