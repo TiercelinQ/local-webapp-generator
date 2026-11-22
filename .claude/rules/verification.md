@@ -1,6 +1,6 @@
 # Verification rules — single source of truth
 
-> Centralized, reusable verification for the whole framework. Referenced by `/local-webapp-p5-development`, `/local-webapp-add-feature`, `/local-webapp-fix-issue`, and `/local-webapp-run-tests` — never duplicated in those skills.
+> Centralized, reusable verification for the whole framework. Referenced by `/local-webapp-p5-development`, `/local-webapp-add-feature`, `/local-webapp-fix-issue`, `/local-webapp-refactor-code`, `/local-webapp-migrate-design`, `/local-webapp-release`, `/local-webapp-load-project`, and `/local-webapp-run-tests` — never duplicated in those skills.
 > Two parts: **executable verification** (run real commands) and **static integrity** (read the code). Run silently; report only on a discrepancy.
 
 ---

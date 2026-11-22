@@ -28,9 +28,9 @@ A structured report (in the user's language) with `file:line` references. Option
 3. **Read the relevant sources** by layer:
    - Contract & specs: `docs/specs/04-architect.md` (structure of truth), other `docs/specs/*`.
    - Shared: `src/shared/config.ts`, `src/shared/types.ts` (DTOs), `src/shared/logger.ts`.
-   - Server entry: `src/server.ts` (or equivalent app bootstrap), global error handlers.
+   - Server entry: `src/index.ts` (or equivalent app bootstrap), global error handlers.
    - Routes: `src/routes/[entity].routes.ts`, `routes/index.ts` — input validation, controller logic.
-   - Services: `src/services/[entity].service.ts`, `services/errors.ts` — external API calls wrapped with timeouts/retries.
+   - Services: `src/services/[entity].service.ts`, `src/shared/errors.ts` — external API calls wrapped with timeouts/retries.
    - Views: `src/views/[entity]/`, shared layout/partials, client-side scripts if any.
    - Styles: `_custom.scss`, `app.scss`.
    - Binding refs (read on demand, not auto-imported): `design-system.md`, `layout.md` — for design-system/layout deviations.
