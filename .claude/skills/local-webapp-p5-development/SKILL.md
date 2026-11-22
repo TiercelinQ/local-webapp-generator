@@ -101,7 +101,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
   - Publish a version: `/local-webapp-release` (turns the accumulated `[Unreleased]` changelog into a dated version and raises the version number)
   ```
 
-  `[app-name]` = the app name from Phase 2. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 0.1.1) — not the app's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
+  `[app-name]` = the app name from Phase 2. The version here is the **framework** version declared at the top of the framework `CLAUDE.md` (currently 2.0.0) — not the app's own version (which starts at 1.0.0 in `package.json` / `docs/release/CHANGELOG.md`). Replace the `Deviations` list with every deviation validated via the Phase 4/5 deviation protocol (`- [deviation] — reason: [justification]`); if none, keep `- None`.
 
 - **`.claude/settings.json`** written at the generated project root so the app stays self-enforced in later maintenance sessions:
 
