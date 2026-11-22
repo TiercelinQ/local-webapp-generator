@@ -2,6 +2,7 @@
 name: local-webapp-show-state
 description: Show the current state of the generation project — phase, batch, next action, locked decisions, open points.
 model: haiku
+effort: low
 ---
 
 # /local-webapp-show-state — Current state

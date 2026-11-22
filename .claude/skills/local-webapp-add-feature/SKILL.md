@@ -2,6 +2,7 @@
 name: local-webapp-add-feature
 description: Add a feature, route, service, or change to a Node/Express local web app already delivered by this framework. Use when the user asks to add or modify functionality on an existing project, respecting the locked architectural contract and the security rules.
 model: sonnet
+effort: high
 ---
 
 # /local-webapp-add-feature — Add a feature to a delivered app

@@ -2,6 +2,7 @@
 name: local-webapp-migrate-design
 description: Convert a Node/Express local web app generated with the legacy custom CSS design system (tokens.css/styles.css, accent-tinted neutrals, signature underline, Lucide sprite) to Bootstrap 5.3 — Sass compilation, $primary accent override, Bootstrap Icons, data-bs-theme dark mode — without changing any behavior. Proposed by /local-webapp-load-project when drift is detected; runs only on explicit validation.
 model: sonnet
+effort: medium
 ---
 
 # /local-webapp-migrate-design — Convert a legacy app to Bootstrap 5.3

@@ -1,7 +1,8 @@
 ---
 name: local-webapp-p4-architect
 description: Phase 4 of the local web app generation cycle — complete architectural contract (tree, role of each file, API endpoints, Bootstrap variables/classes → usage table), written to the contract spec and locked after validation.
-model: sonnet
+model: opus
+effort: high
 ---
 
 # /local-webapp-p4-architect — Architectural contract

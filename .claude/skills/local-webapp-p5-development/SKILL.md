@@ -2,6 +2,7 @@
 name: local-webapp-p5-development
 description: Phase 5 of the local web app generation cycle — development and batch delivery, files written directly to disk, executable verification, final README.
 model: sonnet
+effort: medium
 ---
 
 # /local-webapp-p5-development — Batch development

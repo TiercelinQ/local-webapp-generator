@@ -2,6 +2,7 @@
 name: local-webapp-app
 description: Start menu of the local web app generator — new app, resume an existing session, load a delivered project, or maintain one. Invoke at the beginning of a conversation or at any time via /local-webapp-app.
 model: haiku
+effort: low
 ---
 
 # /local-webapp-app — Start / resume / maintenance menu

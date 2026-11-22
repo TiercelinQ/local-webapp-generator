@@ -2,6 +2,7 @@
 name: local-webapp-generate-readme
 description: Analyze the specs and source of an existing local web app project and generate its README.md (objective, features, stack, tree, API endpoints, conventions, installation). Invoke from the target project root.
 model: sonnet
+effort: low
 ---
 
 # /local-webapp-generate-readme — Generate the README.md
