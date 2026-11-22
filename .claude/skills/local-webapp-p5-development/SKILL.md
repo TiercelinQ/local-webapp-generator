@@ -2,6 +2,7 @@
 name: local-webapp-p5-development
 description: Phase 5 of the local web app generation cycle — development and batch delivery, files written directly to disk, executable verification, final README.
 model: sonnet
+effort: medium
 ---
 
 # /local-webapp-p5-development — Batch development
@@ -24,7 +25,7 @@ The full project source on disk + `README.md` + verified build.
 
 ## Code rules
 
-At start, read and fully apply: `@rules/mvc.md` · `@rules/css.md` · `@rules/errors.md` · `@rules/config.md` · `@rules/env-config.md` · `@rules/api-calls.md` · `@rules/security.md` · `@rules/logging.md` · `@rules/tests.md` (if tests) · `@rules/versioning.md` · `@rules/verification.md` (not auto-imported). **Read `design-system.md` and `layout.md`** (no longer auto-imported) before producing any UI. Read `docs/specs/04-architect.md` — it is the locked contract this build follows.
+At start, read and fully apply: `@rules/mvc.md` · `@rules/css.md` · `@rules/errors.md` · `@rules/config.md` · `@rules/env-config.md` · `@rules/api-calls.md` · `@rules/security.md` · `@rules/logging.md` · `@rules/tests.md` (if tests) · `@rules/versioning.md` · `@rules/readme.md` · `@rules/verification.md` (not auto-imported). **Read `design-system.md` and `layout.md`** (no longer auto-imported) only before the batch that produces UI (views, then styles), by the sections that batch needs, not at start. Skip them for batches without UI. Read `docs/specs/04-architect.md` — it is the locked contract this build follows.
 
 Critical reminders:
 
@@ -74,7 +75,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 - **`.gitignore`** written at the project root — template in `@rules/config.md §.gitignore`. Keeps `node_modules/`, the anchored build output (`/dist/`), `.env`, `tasks/`, `.claude/settings.local.json` + `.claude/agent-memory/`, and the private `docs/specs/` out of the repo, while **never** ignoring `docs/release/CHANGELOG.md`, `.claude/settings.json`, the generated `CLAUDE.md`, or `test/`.
 - **`.env.example`** written at the project root, documenting every variable read via `src/shared/config.ts`: the local `PORT`, one entry per external API system declared in Phase 1 (base URL + credential placeholder, matching the auth method recorded in `docs/specs/01-scoping.md`), and any other environment variable listed in Phase 1. Every entry commented (purpose, whether required). No real secret value — placeholders only. See `@rules/env-config.md`.
 - **`docs/release/CHANGELOG.md`** written at the project root (create `docs/release/`), seeded per `@rules/versioning.md` — **in English**, Keep a Changelog shape: the preamble, an empty `## [Unreleased]`, and the initial `## [1.0.0] - <YYYY-MM-DD>` block with `### Added` / `- Initial release.`. The `1.0.0` matches the app version in `package.json` / `APP_VERSION`. Later releases are cut with `/local-webapp-release`.
-- `README.md` written automatically at the project root: objective, stack, tree, API endpoints, conventions, installation.
+- `README.md` written automatically at the project root, in English (`@rules/readme.md`): objective, stack, tree, API endpoints, conventions, installation.
 - **`CLAUDE.md`** written at the generated project root (in the user's language), recording the app's identity for future sessions:
 
   ```markdown
@@ -82,7 +83,7 @@ Apply `@rules/verification.md` — both the executable commands (§A, blocking w
 
   ## Origin
 
-  Framework: local-webapp v0.1.1
+  Framework: local-webapp v2.0.0
 
   ## Business context
 

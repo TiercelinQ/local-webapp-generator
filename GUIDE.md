@@ -1,6 +1,6 @@
 # Guide d'utilisation — Local Web App Generator
 
-> Version 0.1.1 : pipeline de génération + skills de maintenance, rôle explicite par skill, specs persistées, vérification exécutable, mémoire native.
+> Version 2.0.0 : pipeline de génération + skills de maintenance, rôle explicite par skill, specs persistées, vérification exécutable, mémoire native.
 
 ---
 

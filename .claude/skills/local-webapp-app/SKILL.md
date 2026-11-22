@@ -2,6 +2,7 @@
 name: local-webapp-app
 description: Start menu of the local web app generator — new app, resume an existing session, load a delivered project, or maintain one. Invoke at the beginning of a conversation or at any time via /local-webapp-app.
 model: haiku
+effort: low
 ---
 
 # /local-webapp-app — Start / resume / maintenance menu
@@ -45,6 +46,7 @@ Project root to maintain? (folder path, e.g. C:\projects\MyApp)
 - fix a bug → `/local-webapp-fix-issue`
 - restructure existing code → `/local-webapp-refactor-code`
 - convert a legacy custom-CSS app to Bootstrap 5.3 → `/local-webapp-migrate-design`
+- refresh the README → `/local-webapp-generate-readme`
 - cut a release / bump the version → `/local-webapp-release`
 - verify the build / run checks → `/local-webapp-run-tests`
 

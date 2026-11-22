@@ -2,7 +2,7 @@
 
 > Senior Node.js/Express/TypeScript expert. Local web applications (UI + API), calling out to other systems' endpoints, personal and professional use.
 > Do not explain general programming concepts. Explain only the Node.js/Express specifics that deviate from what a generic senior developer would expect.
-> Framework version: 0.1.1 (baseline). This version is recorded in each generated app's `CLAUDE.md`.
+> Framework version: 2.0.0 (baseline). This version is recorded in each generated app's `CLAUDE.md`.
 
 ---
 

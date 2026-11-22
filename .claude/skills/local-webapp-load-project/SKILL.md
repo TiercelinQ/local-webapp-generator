@@ -2,6 +2,7 @@
 name: local-webapp-load-project
 description: Load an existing local web app project (Phase 5 complete) from its specs and README — bring the generator rules to bear on already-delivered code. Invoke from the target project root.
 model: sonnet
+effort: low
 ---
 
 # /local-webapp-load-project — Load an existing project

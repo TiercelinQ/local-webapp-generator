@@ -1,7 +1,8 @@
 ---
 name: local-webapp-p1-scoping
 description: Phase 1 of the local web app generation cycle — scoping in up to 7 questions plus the accent (incl. local port, external API systems to call, persistent preferences, i18n, tests), accent choice, calibration announcement (number of batches), and writing of the scoping spec.
-model: sonnet
+model: opus
+effort: medium
 ---
 
 # /local-webapp-p1-scoping — Scoping
